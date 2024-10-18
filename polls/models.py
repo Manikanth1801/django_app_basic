@@ -1,10 +1,13 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+    # owner = models.ForeignKey(User, related_name='questions', on_delete=models.CASCADE)  # Add owner 
+    owner = models.ForeignKey(User, related_name='questions', on_delete=models.CASCADE, default=1)  # Add default owner
     def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now

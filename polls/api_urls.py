@@ -1,4 +1,4 @@
-from rest_framework import routers
+from rest_framework import routers # type: ignore
 
 #
 # This module configures the URL routing for the API endpoints in the polls application.

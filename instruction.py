@@ -84,3 +84,15 @@
 # >>> c.delete()
 
 
+# # Attempt to create a question without authentication
+# curl -X POST http://127.0.0.1:8000/api/questions/ \
+#      -H 'Content-Type: application/json' \
+#      -d '{"question_text": "Unauthorized Question?", "pub_date": "2024-10-17T12:00:00Z"}'
+
+# # Response: Authentication credentials were not provided.
+
+# # Authenticate using username and password
+# curl -X POST http://127.0.0.1:8000/api/questions/ \
+#      -u username:password \
+#      -H 'Content-Type: application/json' \
+#      -d '{"question_text": "Authorized Question?", "pub_date": "2024-10-17T12:00:00Z"}'
