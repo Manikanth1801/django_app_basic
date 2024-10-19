@@ -5,6 +5,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from .forms import ContactForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
 
 
 
@@ -71,3 +73,15 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
     
 
+def json_example(request):
+    data = {
+        'message': 'Hello, World!',
+        'items': [1, 2, 3, 4, 5],
+    }
+    return JsonResponse(data)
+
+def trigger_error(request):
+    # Simulate an error by dividing by zero
+    result = 1 / 0
+    raise Exception("This is a simulated server error!")
+    return HttpResponse("This will never be reached.")

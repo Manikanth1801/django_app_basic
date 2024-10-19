@@ -17,6 +17,10 @@ class Question(models.Model):
     was_published_recently.short_description = 'Published recently?'
     def __str__(self):
         return self.question_text
+    class Meta:
+        indexes = [
+            models.Index(fields=['pub_date']),  # Index on pub_date for faster queries
+        ]
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)

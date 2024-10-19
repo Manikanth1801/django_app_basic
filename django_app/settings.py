@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7=r!ivhy&=i3@3pal_1v$evp$bo&y%=#66y_+!7ucud(0d0-!='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1'] # should be added if Debug is false
 
 
 # Application definition
@@ -39,10 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polls',
     'accounts',
-    'rest_framework'
+    'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # Add CORS middleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_app.middleware.LogRequestMiddleware',  # Add custom middleware
+    'django_app.middleware.CustomHeaderMiddleware',  # Add custom middleware
 ]
 
 ROOT_URLCONF = 'django_app.urls'
@@ -118,9 +121,14 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 5,
+    'EXCEPTION_HANDLER': 'django_app.utils.custom_exception_handler',
 }
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000", 
+]
 
+#CORS_ALLOW_ALL_ORIGINS = True #for dev purpose
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
