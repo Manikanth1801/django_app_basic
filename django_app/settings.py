@@ -27,10 +27,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG",'False') == True # should be added if Debug is false
 
-if DEBUG:
-    ALLOWED_HOSTS = ["*"]
-else:
-    ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 # Application definition
 
@@ -135,7 +133,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", 
 ]
 
-#CORS_ALLOW_ALL_ORIGINS = True #for dev purpose
+CORS_ALLOW_ALL_ORIGINS = DEBUG #for dev purpose
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
