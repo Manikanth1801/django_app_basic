@@ -7,7 +7,7 @@ db.sqlite3
 *.log
 
 # Migrations
-*/migrations/*.pyc
+*/migrations/*.pyc 
 */migrations/*.py[cod]
 **.pyc
 
