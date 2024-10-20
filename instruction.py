@@ -96,3 +96,7 @@
 #      -u username:password \
 #      -H 'Content-Type: application/json' \
 #      -d '{"question_text": "Authorized Question?", "pub_date": "2024-10-17T12:00:00Z"}'
+
+
+
+# git rm --cached -r env
