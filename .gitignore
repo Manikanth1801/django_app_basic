@@ -31,8 +31,6 @@ Thumbs.db
 # Ignore IDE/editor specific files
 .vscode/
 .idea/
-*.sublime-project
-*.sublime-workspace
 
 # Ignore compiled files
 *.cpython-*

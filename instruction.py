@@ -100,3 +100,5 @@
 
 
 # git rm --cached -r env
+
+# curl -X POST http://localhost:8000/accounts/register/ \ -H "Content-Type: application/json" \ -d '{"username": "your_username","password": "your_password","email": "your_email@example.com","firstName": "YourFirstName","lastName": "YourLastName","dob": "1990-01-01","gender": "Male"}'

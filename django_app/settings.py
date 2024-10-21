@@ -22,10 +22,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+# SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG",'False') == True # should be added if Debug is false
+# DEBUG = os.environ.get("DEBUG",'False') == True # should be added if Debug is false
+SECRET_KEY = 'django-insecure-7=r!ivhy&=i3@3pal_1v$evp$bo&y%=#66y_+!7ucud(0d0-!='
+
+DEBUG = True# should be added if Debug is false
+
 
 
 ALLOWED_HOSTS = ['*']
@@ -42,13 +46,15 @@ INSTALLED_APPS = [
     'polls',
     'accounts',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'project',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # Add CORS middleware
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', #used for session management
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -88,9 +94,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3', #NAME: The name of the database file (for SQLite).
     }
 }
-databaseURL = os.environ.get('DATABASE_URL')
-DATABASES['default'] = dj_database_url.parse(databaseURL) 
-# DATABASES['default'] = dj_database_url.parse('postgresql://polls_db_ucdy_user:hLlQEtoyUJv2nBivJA1pEnvwtVadEb8i@dpg-csa69qa3esus739pmr30-a.singapore-postgres.render.com/polls_db_ucdy') # This line of code is used to parse the database URL from the environment variable DATABASE_URL. This is useful when you deploy your Django application to Heroku, as Heroku automatically sets the DATABASE_URL environment variable for you. This line of code will parse the database URL and set the default database configuration for your Django application.
+# databaseURL = os.environ.get('DATABASE_URL')
+# DATABASES['default'] = dj_database_url.parse(databaseURL) 
+DATABASES['default'] = dj_database_url.parse('postgresql://polls_db_ucdy_user:hLlQEtoyUJv2nBivJA1pEnvwtVadEb8i@dpg-csa69qa3esus739pmr30-a.singapore-postgres.render.com/polls_db_ucdy') # This line of code is used to parse the database URL from the environment variable DATABASE_URL. This is useful when you deploy your Django application to Heroku, as Heroku automatically sets the DATABASE_URL environment variable for you. This line of code will parse the database URL and set the default database configuration for your Django application.
 # The above code is the default database configuration that Django uses when you first create a project.
 
 # Password validation
@@ -110,6 +116,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default backend
+    # Add custom backends if you're using any
+]
 
 #Login URL
 LOGIN_URL = '/accounts/login/'
@@ -120,9 +130,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 5,
@@ -132,6 +144,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", 
 ]
+CORS_ALLOW_CREDENTIALS = False  # Since we're not using cookies for authentication
 
 CORS_ALLOW_ALL_ORIGINS = DEBUG #for dev purpose
 
