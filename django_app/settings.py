@@ -143,6 +143,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "https://my-portfolio-ui-beta.vercel.app/", 
+    "https://my-portfolio-ui-git-master-manii1801s-projects.vercel.app/", 
 ]
 CORS_ALLOW_CREDENTIALS = False  # Since we're not using cookies for authentication
 
